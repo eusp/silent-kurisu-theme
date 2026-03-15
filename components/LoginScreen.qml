@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import SddmComponents
-import Qt5Compat.GraphicalEffects
+import QtQuick.Effects
 
 Item {
     id: loginScreen
