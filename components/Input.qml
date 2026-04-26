@@ -26,7 +26,6 @@ Item {
         enabled: input.enabled
         echoMode: input.isPassword ? TextInput.Password : TextInput.Normal
         passwordCharacter: "●"
-        inputMethodHints: Qt.ImhNone
         activeFocusOnTab: true
         selectByMouse: true
         verticalAlignment: TextField.AlignVCenter

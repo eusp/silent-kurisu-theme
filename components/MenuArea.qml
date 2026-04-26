@@ -119,6 +119,7 @@ Item {
             backgroundOpacity: 0.0
             activeBackgroundColor: "#5d5dff"
             activeBackgroundOpacity: 1.0
+            showKeyboardPattern: true
             enabled: loginScreen.state === "normal" || popup.visible
             activeFocusOnTab: true
             focus: false
@@ -210,6 +211,36 @@ Item {
             topMargin: 0
         }
     }
+
+    Component {
+        id: keyboardButtonComponent
+        IconButton {
+            id: keyboardButton
+            height: 32
+            width: 32
+            icon: "../icons/keyboard.svg" // fallback to an existing icon if keyboard doesn't exist, wait, do we have keyboard.svg? Let's check or use user-default.svg temporarily
+            iconSize: 16
+            contentColor: root.virtualKeyboardVisible ? "#050505" : "#e0e0ff"
+            activeContentColor: "#050505"
+            fontFamily: "RedHatDisplay"
+            active: root.virtualKeyboardVisible
+            borderRadius: 8
+            borderSize: 0
+            backgroundColor: "#5d5dff"
+            backgroundOpacity: root.virtualKeyboardVisible ? 1.0 : 0.0
+            activeBackgroundColor: "#5d5dff"
+            activeBackgroundOpacity: 1.0
+            showKeyboardPattern: true
+            enabled: loginScreen.state === "normal"
+            activeFocusOnTab: true
+            focus: false
+            onClicked: {
+                root.virtualKeyboardVisible = !root.virtualKeyboardVisible;
+            }
+            tooltipText: "Toggle Keyboard"
+        }
+    }
+
 
     Row {
         // top_right
@@ -328,7 +359,8 @@ Item {
     Component.onCompleted: {
         var menus = [
             { name: "session", index: 1, position: "bottom-left" },
-            { name: "power", index: 2, position: "bottom-right" }
+            { name: "power", index: 2, position: "bottom-right" },
+            { name: "keyboard", index: 3, position: "top-right" }
         ];
 
         for (var i = 0; i < menus.length; i++) {
@@ -349,6 +381,8 @@ Item {
                 createdObject = sessionMenuComponent.createObject(pos, {});
             else if (menus[i].name === "power")
                 createdObject = powerMenuComponent.createObject(pos, {});
+            else if (menus[i].name === "keyboard")
+                createdObject = keyboardButtonComponent.createObject(pos, {});
 
             if (createdObject) {
                 createdObjects.push(createdObject);

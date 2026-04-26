@@ -30,6 +30,7 @@ Item {
     property int borderSize: 0
     property color borderColor: isActive ? iconButton.activeContentColor : iconButton.contentColor
     property int preferredWidth: -1
+    property bool showKeyboardPattern: false
 
     width: preferredWidth !== -1 ? preferredWidth : buttonContentRow.width // childrenRect doesn't update for some reason
     height: iconSize * 2
@@ -37,12 +38,20 @@ Item {
     Rectangle {
         id: buttonBackground
         anchors.fill: parent
-        color: iconButton.isActive ? iconButton.activeBackgroundColor : iconButton.backgroundColor
-        opacity: iconButton.isActive ? iconButton.activeBackgroundOpacity : iconButton.backgroundOpacity
-        topLeftRadius: iconButton.borderRadiusLeft * root.generalScale
-        topRightRadius: iconButton.borderRadiusRight * root.generalScale
-        bottomLeftRadius: iconButton.borderRadiusLeft * root.generalScale
-        bottomRightRadius: iconButton.borderRadiusRight * root.generalScale
+        color: "#FFFFFF"
+        opacity: iconButton.isActive ? 0.5 : 0.0
+        radius: 10
+        
+        visible: opacity > 0
+
+        layer.enabled: true
+        layer.effect: MultiEffect {
+            shadowEnabled: true
+            shadowColor: "#5d5dff"
+            shadowBlur: 0.6
+            shadowHorizontalOffset: 0
+            shadowVerticalOffset: 0
+        }
 
         Behavior on opacity {
             enabled: true
@@ -55,15 +64,12 @@ Item {
     Rectangle {
         id: buttonBorder
         color: "transparent"
-        topLeftRadius: iconButton.borderRadiusLeft * root.generalScale
-        topRightRadius: iconButton.borderRadiusRight * root.generalScale
-        bottomLeftRadius: iconButton.borderRadiusLeft * root.generalScale
-        bottomRightRadius: iconButton.borderRadiusRight * root.generalScale
+        radius: 10
         anchors.fill: parent
-        visible: iconButton.borderSize > 0 || iconButton.focus
+        visible: iconButton.focus
         border {
             color: iconButton.borderColor
-            width: iconButton.focus ? (iconButton.borderSize || 2) : (iconButton.borderSize > 0 ? iconButton.borderSize : 0)
+            width: 2
         }
     }
 

@@ -8,6 +8,7 @@ import "components"
 Item {
     id: root
 
+    property bool virtualKeyboardVisible: false
     property bool capsLockOn: false
     Component.onCompleted: {
         if (keyboard)
@@ -29,10 +30,12 @@ Item {
             PropertyChanges {
                 target: lockScreen
                 opacity: 1.0
+                y: 0
             }
             PropertyChanges {
                 target: loginScreen
                 opacity: 0.0
+                y: mainFrame.height
             }
             PropertyChanges {
                 target: loginScreen.loginContainer
@@ -50,10 +53,12 @@ Item {
             PropertyChanges {
                 target: lockScreen
                 opacity: 0.0
+                y: -mainFrame.height
             }
             PropertyChanges {
                 target: loginScreen
                 opacity: 1.0
+                y: 0
             }
             PropertyChanges {
                 target: loginScreen.loginContainer
@@ -75,7 +80,8 @@ Item {
         }
         PropertyAnimation {
             duration: 400
-            properties: "blurMax"
+            properties: "blurMax,y"
+            easing.type: Easing.InOutQuad
         }
         PropertyAnimation {
             duration: 400
@@ -202,7 +208,8 @@ Item {
             LockScreen {
                 id: lockScreen
                 z: root.state === "lockState" ? 2 : 1 // Fix tooltips from the login screen showing up on top of the lock screen.
-                anchors.fill: parent
+                width: parent.width
+                height: parent.height
                 focus: root.state === "lockState"
                 enabled: root.state === "lockState"
                 onLoginRequested: {
@@ -213,7 +220,8 @@ Item {
             LoginScreen {
                 id: loginScreen
                 z: root.state === "loginState" ? 2 : 1
-                anchors.fill: parent
+                width: parent.width
+                height: parent.height
                 enabled: root.state === "loginState"
                 opacity: 0.0
                 onClose: {
@@ -221,5 +229,10 @@ Item {
                 }
             }
         }
+        
+        VirtualKeyboard {
+            id: virtualKeyboardPlugin
+        }
     }
 }
+
