@@ -79,6 +79,7 @@ Item {
     }
 
     function resetFocus() {
+        if (!enabled) return;
         if (!loginScreen.foundUsers) {
             userInput.input.forceActiveFocus();
         } else {
