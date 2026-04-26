@@ -11,18 +11,18 @@ SHPATH=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 install_dependencies () {
     if command -v pacman &>/dev/null; then
         echo -e "${grey}Installing dependencies with 'pacman'...${reset}"
-        sudo pacman -S --needed sddm qt6-svg qt6-virtualkeyboard qt6-multimedia-ffmpeg
+        sudo pacman -S --needed sddm qt6-svg qt6-multimedia-ffmpeg
     elif command -v xbps-install &>/dev/null; then
         echo -e "${grey}Installing dependencies with 'xbps'...${reset}"
-        sudo xbps-install sddm qt6-svg qt6-virtualkeyboard qt6-multimedia
+        sudo xbps-install sddm qt6-svg qt6-multimedia
     elif command -v dnf &>/dev/null; then
         echo -e "${grey}Installing dependencies with 'dnf'...${reset}"
-        sudo dnf install sddm qt6-qtsvg qt6-qtvirtualkeyboard qt6-qtmultimedia
+        sudo dnf install sddm qt6-qtsvg qt6-qtmultimedia
     elif command -v zypper &>/dev/null; then
         echo -e "${grey}Installing dependencies with 'zypper'...${reset}"
-        sudo zypper install sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-imports qt6-multimedia qt6-multimedia-imports
+        sudo zypper install sddm-qt6 libQt6Svg6 qt6-multimedia qt6-multimedia-imports
     else
-        echo -e "\n${red}Could not install dependencies!\nDo it manually: ${cyan}https://github.com/uiriansan/SilentSDDM/wiki#dependencies${reset}\n"
+        echo -e "\n${red}Could not install dependencies!${reset}\n"
         return 1
     fi
 }
@@ -50,18 +50,12 @@ apply_theme () {
             echo -e "\n[Theme]\nCurrent=silent" | sudo tee -a /etc/sddm.conf
         fi
 
-        if ! grep -Pzq 'InputMethod=qtvirtualkeyboard' /etc/sddm.conf; then
-            echo -e "\n[General]\nInputMethod=qtvirtualkeyboard" | sudo tee -a /etc/sddm.conf
-        fi
-
-        # "InputMethod" was supposed to automatically set "QT_IM_MODULE", but it doesn't, so we manually export it.
-        if ! grep -Pzq 'GreeterEnvironment=QML2_IMPORT_PATH=/usr/share/sddm/themes/silent/components/,QT_IM_MODULE=qtvirtualkeyboard' /etc/sddm.conf; then
-            echo -e "\n[General]\nGreeterEnvironment=QML2_IMPORT_PATH=/usr/share/sddm/themes/silent/components/,QT_IM_MODULE=qtvirtualkeyboard" | sudo tee -a /etc/sddm.conf
+        if ! grep -Pzq 'GreeterEnvironment=QML2_IMPORT_PATH=/usr/share/sddm/themes/silent/components/' /etc/sddm.conf; then
+            echo -e "\n[General]\nGreeterEnvironment=QML2_IMPORT_PATH=/usr/share/sddm/themes/silent/components/" | sudo tee -a /etc/sddm.conf
         fi
     else
         echo -e "[Theme]\nCurrent=silent" | sudo tee -a /etc/sddm.conf
-        echo -e "\n[General]\nInputMethod=qtvirtualkeyboard" | sudo tee -a /etc/sddm.conf
-        echo -e "GreeterEnvironment=QML2_IMPORT_PATH=/usr/share/sddm/themes/silent/components/,QT_IM_MODULE=qtvirtualkeyboard" | sudo tee -a /etc/sddm.conf
+        echo -e "\n[General]\nGreeterEnvironment=QML2_IMPORT_PATH=/usr/share/sddm/themes/silent/components/" | sudo tee -a /etc/sddm.conf
     fi
 }
 

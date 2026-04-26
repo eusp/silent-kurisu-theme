@@ -29,7 +29,7 @@ Item {
         boundsBehavior: Flickable.StopAtBounds
 
         // Center the active avatar
-        preferredHighlightBegin: selector.orientation === "horizontal" ? (width - Config.avatarActiveSize * Config.generalScale) / 2 : (height - Config.avatarActiveSize * Config.generalScale) / 2
+        preferredHighlightBegin: selector.orientation === "horizontal" ? (width - 80) / 2 : (height - 80) / 2
         preferredHighlightEnd: preferredHighlightBegin
         highlightRangeMode: ListView.StrictlyEnforceRange
         // Padding for centering
@@ -57,8 +57,8 @@ Item {
         }
 
         delegate: Rectangle {
-            width: index === userList.currentIndex ? (Config.avatarActiveSize * Config.generalScale) : (Config.avatarInactiveSize * Config.generalScale)
-            height: index === userList.currentIndex ? (Config.avatarActiveSize * Config.generalScale) : (Config.avatarInactiveSize * Config.generalScale)
+            width: index === userList.currentIndex ? 80 : 48
+            height: index === userList.currentIndex ? 80 : 48
             anchors {
                 verticalCenter: selector.orientation === "horizontal" ? parent.verticalCenter : undefined
                 horizontalCenter: selector.orientation === "horizontal" ? undefined : parent.horizontalCenter
@@ -67,14 +67,14 @@ Item {
             visible: selector.listUsers || index === userList.currentIndex
 
             Behavior on width {
-                enabled: Config.enableAnimations
+                enabled: true
                 NumberAnimation {
                     duration: 200
                     easing.type: Easing.OutQuad
                 }
             }
             Behavior on height {
-                enabled: Config.enableAnimations
+                enabled: true
                 NumberAnimation {
                     duration: 200
                     easing.type: Easing.OutQuad
@@ -82,7 +82,7 @@ Item {
             }
             opacity: selector.listUsers || index === userList.currentIndex ? 1.0 : 0.0
             Behavior on opacity {
-                enabled: Config.enableAnimations
+                enabled: true
                 NumberAnimation {
                     duration: 200
                 }
@@ -93,13 +93,13 @@ Item {
                 height: parent.height
                 source: model.icon
                 active: index === userList.currentIndex
-                opacity: active ? 1.0 : Config.avatarInactiveOpacity
+                opacity: active ? 1.0 : 0.5
                 enabled: userModel.rowCount() > 1 // No need to open the selector if there's only one user
                 tooltipText: active && selector.listUsers ? "Close user selection" : (active && !listUsers ? "Select user" : `Select user ${model.name}`)
                 showTooltip: selector.focus && !listUsers && active
 
                 Behavior on opacity {
-                    enabled: Config.enableAnimations
+                    enabled: true
                     NumberAnimation {
                         duration: 200
                     }

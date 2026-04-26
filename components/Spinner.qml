@@ -4,24 +4,24 @@ import QtQuick.Effects
 
 Item {
     id: spinnerContainer
-    width: (spinner.width + Config.spinnerSpacing + spinnerText.width) * Config.generalScale
-    height: childrenRect.height * Config.generalScale
+    width: spinner.width + 10 + spinnerText.width
+    height: childrenRect.height
 
     Behavior on opacity {
-        enabled: Config.enableAnimations
+        enabled: true
         NumberAnimation {
             duration: 150
         }
     }
     Behavior on visible {
-        enabled: Config.enableAnimations && Config.spinnerDisplayText
-        ParallelAnimation {
-            running: spinnerContainer.visible && Config.spinnerDisplayText
+        enabled: true && true
+            ParallelAnimation {
+            running: spinnerContainer.visible && true
             NumberAnimation {
                 target: spinnerText
-                property: Config.loginAreaPosition === "left" ? "anchors.leftMargin" : (Config.loginAreaPosition === "right" ? "anchors.rightMargin" : "anchors.topMargin")
+                property: "anchors.topMargin"
                 from: -spinner.height
-                to: Config.spinnerSpacing
+                to: 10
                 duration: 300
                 easing.type: Easing.OutQuart
             }
@@ -37,18 +37,18 @@ Item {
 
     Image {
         id: spinner
-        source: Config.getIcon(Config.spinnerIcon)
-        width: Config.spinnerIconSize * Config.generalScale
+        source: "../icons/spinner.svg"
+        width: 16
         height: width
         sourceSize.width: width
         sourceSize.height: height
         visible: false
 
         Component.onCompleted: {
-            if (Config.loginAreaPosition === "left") {
+            if (false) { // center
                 anchors.left = parent.left;
                 anchors.verticalCenter = parent.verticalCenter;
-            } else if (Config.loginAreaPosition === "right") {
+            } else if (root.loginAreaPosition === "right") {
                 anchors.right = parent.right;
                 anchors.verticalCenter = parent.verticalCenter;
             } else {
@@ -62,13 +62,13 @@ Item {
         source: spinner
         anchors.fill: spinner
         colorization: 1
-        colorizationColor: Config.spinnerColor
-        opacity: Config.spinnerDisplayText ? 0.0 : 1.0
+        colorizationColor: "#5d5dff"
+        opacity: 0.0
         antialiasing: true
     }
     RotationAnimation {
         target: spinnerEffect
-        running: spinnerContainer.visible && Config.enableAnimations
+        running: spinnerContainer.visible && true
         from: 0
         to: 360
         loops: Animation.Infinite
@@ -77,31 +77,21 @@ Item {
 
     Text {
         id: spinnerText
-        visible: Config.spinnerDisplayText
-        text: Config.spinnerText
-        color: Config.spinnerColor
-        font.pixelSize: Config.spinnerFontSize * Config.generalScale
-        font.weight: Config.spinnerFontWeight
-        font.family: Config.spinnerFontFamily
+        visible: true
+        text: "Loading"
+        color: "#5d5dff"
+        font.pixelSize: 12
+        font.weight: 400
+        font.family: "RedHatDisplay"
 
         Component.onCompleted: {
-            if (Config.loginAreaPosition === "left") {
-                anchors.left = spinner.right;
-                anchors.leftMargin = Config.spinnerSpacing;
-                anchors.verticalCenter = parent.verticalCenter;
-            } else if (Config.loginAreaPosition === "right") {
-                anchors.right = spinner.left;
-                anchors.rightMargin = Config.spinnerSpacing;
-                anchors.verticalCenter = parent.verticalCenter;
-            } else {
-                anchors.top = spinner.bottom;
-                anchors.topMargin = Config.spinnerSpacing;
-                anchors.horizontalCenter = parent.horizontalCenter;
-            }
+            anchors.top = spinner.bottom;
+            anchors.topMargin = 10;
+            anchors.horizontalCenter = parent.horizontalCenter;
         }
 
         onVisibleChanged: {
-            if (visible && Config.enableAnimations && Config.spinnerDisplayText) {
+            if (visible && true && true) {
                 spinnerTextInterval.running = true;
             } else {
                 spinnerTextAnimation.running = false;

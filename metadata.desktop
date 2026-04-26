@@ -1,12 +1,10 @@
-; https://github.com/uiriansan/SilentSDDM
-
 [SddmGreeterTheme]
-Name=Silent
+Name=Silent-Kurisu
 Type=sddm-theme
 Description=A very customizable SDDM theme that actually looks good.
 License=GPL-3.0-or-later
 Version=1.4.0
-Theme-Id=silent
+Theme-Id=silent-kurisu
 Theme-API=2.0
 MainScript=Main.qml
 Screenshot=docs/previews/default.png
@@ -16,7 +14,7 @@ QtVersion=6
 # ConfigFile=configs/default.conf
 # ConfigFile=configs/default-left.conf
 # ConfigFile=configs/default-right.conf
-ConfigFile=configs/rei.conf
+
 # ConfigFile=configs/ken.conf
 # ConfigFile=configs/silvia.conf
 # ConfigFile=configs/everforest.conf

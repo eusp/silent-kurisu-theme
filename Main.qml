@@ -7,12 +7,6 @@ import "components"
 
 Item {
     id: root
-    state: Config.lockScreenDisplay ? "lockState" : "loginState"
-
-    // TODO: Add own translations: https://github.com/sddm/sddm/wiki/Localization
-    TextConstants {
-        id: textConstants
-    }
 
     property bool capsLockOn: false
     Component.onCompleted: {
@@ -21,6 +15,12 @@ Item {
     }
     onCapsLockOnChanged: {
         loginScreen.updateCapsLock();
+    }
+
+    state: "lockState"
+
+    TextConstants {
+        id: textConstants
     }
 
     states: [
@@ -40,9 +40,9 @@ Item {
             }
             PropertyChanges {
                 target: backgroundEffect
-                blurMax: Config.lockScreenBlur
-                brightness: Config.lockScreenBrightness
-                saturation: Config.lockScreenSaturation
+                blurMax: 32
+                brightness: 0.0
+                saturation: 0.0
             }
         },
         State {
@@ -61,14 +61,14 @@ Item {
             }
             PropertyChanges {
                 target: backgroundEffect
-                blurMax: Config.loginScreenBlur
-                brightness: Config.loginScreenBrightness
-                saturation: Config.loginScreenSaturation
+                blurMax: 0
+                brightness: 0.0
+                saturation: 0.0
             }
         }
     ]
     transitions: Transition {
-        enabled: Config.enableAnimations
+        enabled: true
         PropertyAnimation {
             duration: 150
             properties: "opacity"
@@ -99,7 +99,7 @@ Item {
         Image {
             // Background
             id: backgroundImage
-            property string tsource: root.state === "lockState" ? Config.lockScreenBackground : Config.loginScreenBackground
+            property string tsource: root.state === "lockState" ? "kurisu.mp4" : "rei.mp4"
 
             property bool isVideo: {
                 if (!tsource || tsource.toString().length === 0)
@@ -110,22 +110,14 @@ Item {
                 var ext = parts[parts.length - 1];
                 return ["avi", "mp4", "mov", "mkv", "m4v", "webm"].indexOf(ext) !== -1;
             }
-            property bool displayColor: root.state === "lockState" && Config.lockScreenUseBackgroundColor || root.state === "loginState" && Config.loginScreenUseBackgroundColor
-            property string placeholder: Config.animatedBackgroundPlaceholder // Idea stolen from astronaut-theme. Not a fan of it, but works...
+            property bool displayColor: root.state === "lockState" && false || root.state === "loginState" && false
+            property string placeholder: "kurisu.png" // Idea stolen from astronaut-theme. Not a fan of it, but works...
 
             anchors.fill: parent
             source: !isVideo ? "backgrounds/" + tsource : ""
             cache: true
             mipmap: true
-            fillMode: {
-                if (Config.backgroundFillMode === "stretch") {
-                    return Image.Stretch;
-                } else if (Config.backgroundFillMode === "fit") {
-                    return Image.PreserveAspectFit;
-                } else {
-                    return Image.PreserveAspectCrop;
-                }
-            }
+            fillMode: Image.PreserveAspectCrop
 
             function updateVideo() {
                 if (isVideo && tsource.toString().length > 0) {
@@ -157,7 +149,7 @@ Item {
                 id: backgroundColor
                 anchors.fill: parent
                 anchors.margins: 0
-                color: root.state === "lockState" && Config.lockScreenUseBackgroundColor ? Config.lockScreenBackgroundColor : root.state === "loginState" && Config.loginScreenUseBackgroundColor ? Config.loginScreenBackgroundColor : "black"
+                color: root.state === "lockState" && false ? "#050505" : (root.state === "loginState" && false ? "#050505" : "black")
                 visible: parent.displayColor || (backgroundVideo.visible && parent.placeholder.length === 0)
             }
 
@@ -170,15 +162,7 @@ Item {
                 autoPlay: false
                 loops: MediaPlayer.Infinite
                 muted: true
-                fillMode: {
-                    if (Config.backgroundFillMode === "stretch") {
-                        return VideoOutput.Stretch;
-                    } else if (Config.backgroundFillMode === "fit") {
-                        return VideoOutput.PreserveAspectFit;
-                    } else {
-                        return VideoOutput.PreserveAspectCrop;
-                    }
-                }
+                fillMode: VideoOutput.PreserveAspectCrop
 
                 onSourceChanged: {
                     if (source && source.toString().length > 0) {

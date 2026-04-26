@@ -1,148 +1,12 @@
 import QtQuick
+import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Layouts
-import QtQuick.Controls
 
 Item {
     id: lockScreen
-    signal loginRequested
 
-    // TODO: Support for weather info?
-    Item {
-	    id: timePositioner
-
-	    ColumnLayout {
-		id: timeColumn
-		anchors.centerIn: parent
-		spacing: 6
-
-		Text {
-		    id: time
-		    visible: Config.clockDisplay
-		    font.pixelSize: Config.clockFontSize * Config.generalScale
-		    font.weight: Config.clockFontWeight
-		    font.family: Config.clockFontFamily
-		    color: Config.clockColor
-		    Layout.alignment: Qt.AlignHCenter
-
-			layer.enabled: true
-			layer.effect: MultiEffect {
-			    shadowEnabled: true
-			    shadowColor: "#5d5dff"
-			    shadowBlur: 0.8
-			    shadowHorizontalOffset: 0
-			    shadowVerticalOffset: 0
-			}
-
-		    function updateTime() {
-		        text = new Date().toLocaleString(Qt.locale(Config.dateLocale), Config.clockFormat);
-		    }
-		}
-
-		Rectangle {
-		    Layout.alignment: Qt.AlignHCenter
-		    width: 40
-		    height: 1
-		    color: "#a0a0ff"
-		    opacity: 0.4
-		}
-
-		Text {
-		    id: date
-		    Layout.alignment: Qt.AlignHCenter
-		    visible: Config.dateDisplay
-		    font.pixelSize: Config.dateFontSize * Config.generalScale
-		    font.family: Config.dateFontFamily
-		    font.weight: Config.dateFontWeight
-		    color: "#050505"
-
-			layer.enabled: true
-			layer.effect: MultiEffect {
-			    shadowEnabled: true
-			    shadowColor: "#5d5dff"
-			    shadowBlur: 0.8
-			    shadowHorizontalOffset: 0
-			    shadowVerticalOffset: 0
-			}
-
-		    function updateDate() {
-		        text = new Date().toLocaleString(Qt.locale(Config.dateLocale), Config.dateFormat);
-		    }
-		}
-	    }
-
-	    Timer {
-		id: clockTimer
-		interval: 1000
-		repeat: true
-		running: true
-		onTriggered: {
-		    time.updateTime();
-		    date.updateDate();
-		}
-	    }
-
-	    Component.onDestruction: {
-		if (clockTimer) {
-		    clockTimer.stop();
-		}
-	    }
-
-	    Component.onCompleted: {
-		anchors.verticalCenter = lockScreen.verticalCenter;
-		anchors.horizontalCenter = lockScreen.horizontalCenter;
-		time.updateTime();
-		date.updateDate();
-	    }
-	}
-
-    ColumnLayout {
-        id: messagePositioner
-        visible: Config.lockMessageDisplay
-        spacing: Config.lockMessageSpacing
-        Item {
-            Layout.alignment: Config.lockMessageAlign === "left" ? Qt.AlignLeft : (Config.lockMessageAlign === "right" ? Qt.AlignRight : Qt.AlignHCenter)
-            Layout.preferredWidth: Config.lockMessageIconSize
-            Layout.preferredHeight: Config.lockMessageIconSize
-
-            Image {
-                id: lockIcon
-                source: Config.getIcon(Config.lockMessageIcon)
-                width: Config.lockMessageIconSize * Config.generalScale
-                height: width
-                sourceSize: Qt.size(width, height)
-                fillMode: Image.PreserveAspectFit
-                visible: false
-            }
-            MultiEffect {
-                source: lockIcon
-                anchors.fill: lockIcon
-                colorization: Config.lockMessagePaintIcon ? 1 : 0
-                colorizationColor: Config.lockMessageColor
-                visible: Config.lockMessageDisplayIcon
-                antialiasing: true
-            }
-        }
-
-        Text {
-            id: lockMessage
-            Layout.alignment: Config.lockMessageAlign === "left" ? Qt.AlignLeft : (Config.lockMessageAlign === "right" ? Qt.AlignRight : Qt.AlignHCenter)
-            font.pixelSize: Config.lockMessageFontSize * Config.generalScale
-            font.family: Config.lockMessageFontFamily
-            font.weight: Config.lockMessageFontWeight
-            color: Config.lockMessageColor
-            text: Config.lockMessageText
-        }
-
-        anchors {
-            // FIX: Height calculation fixes - protect against zero division
-            topMargin: Config.lockScreenPaddingTop || (lockScreen.height > 0 ? lockScreen.height / 10 : 50)
-            rightMargin: Config.lockScreenPaddingRight || (lockScreen.height > 0 ? lockScreen.height / 10 : 50)
-            bottomMargin: Config.lockScreenPaddingBottom || (lockScreen.height > 0 ? lockScreen.height / 10 : 50)
-            leftMargin: Config.lockScreenPaddingLeft || (lockScreen.height > 0 ? lockScreen.height / 10 : 50)
-        }
-        Component.onCompleted: lockScreen.alignItem(messagePositioner, Config.lockMessagePosition)
-    }
+    signal loginRequested()
 
     function alignItem(item, pos) {
         switch (pos) {
@@ -184,25 +48,176 @@ Item {
         }
     }
 
+    Keys.onPressed: function(event) {
+        if (event.key === Qt.Key_CapsLock)
+            root.capsLockOn = !root.capsLockOn;
+
+        if (event.key === Qt.Key_Escape) {
+            event.accepted = false;
+            return ;
+        } else {
+            lockScreen.loginRequested();
+        }
+        event.accepted = true;
+    }
+
+    // TODO: Support for weather info?
+    Item {
+        id: timePositioner
+
+        Component.onDestruction: {
+            if (clockTimer)
+                clockTimer.stop();
+
+        }
+        Component.onCompleted: {
+            anchors.verticalCenter = lockScreen.verticalCenter;
+            anchors.horizontalCenter = lockScreen.horizontalCenter;
+            time.updateTime();
+            date.updateDate();
+        }
+
+        ColumnLayout {
+            id: timeColumn
+
+            anchors.centerIn: parent
+            spacing: 6
+
+            Text {
+                id: time
+
+                function updateTime() {
+                    text = new Date().toLocaleString(Qt.locale("en_US"), "hh:mm");
+                }
+
+                visible: true
+                font.pixelSize: 120
+                font.weight: 900
+                font.family: "RedHatDisplay"
+                color: "#050505"
+                Layout.alignment: Qt.AlignHCenter
+                layer.enabled: true
+
+                layer.effect: MultiEffect {
+                    shadowEnabled: true
+                    shadowColor: "#5d5dff"
+                    shadowBlur: 0.8
+                    shadowHorizontalOffset: 0
+                    shadowVerticalOffset: 0
+                }
+
+            }
+
+            Rectangle {
+                Layout.alignment: Qt.AlignHCenter
+                width: 40
+                height: 1
+                color: "#a0a0ff"
+                opacity: 0.4
+            }
+
+            Text {
+                id: date
+
+                function updateDate() {
+                    text = new Date().toLocaleString(Qt.locale("en_US"), "dddd, MMMM dd, yyyy");
+                }
+
+                Layout.alignment: Qt.AlignHCenter
+                visible: true
+                font.pixelSize: 25
+                font.family: "RedHatDisplay"
+                font.weight: 800
+                color: "#a0a0ff"
+                layer.enabled: true
+
+                layer.effect: MultiEffect {
+                    shadowEnabled: true
+                    shadowColor: "#5d5dff"
+                    shadowBlur: 0.8
+                    shadowHorizontalOffset: 0
+                    shadowVerticalOffset: 0
+                }
+
+            }
+
+        }
+
+        Timer {
+            id: clockTimer
+
+            interval: 1000
+            repeat: true
+            running: true
+            onTriggered: {
+                time.updateTime();
+                date.updateDate();
+            }
+        }
+
+    }
+
+    ColumnLayout {
+        id: messagePositioner
+
+        visible: false
+        spacing: 0
+        Component.onCompleted: lockScreen.alignItem(messagePositioner, "bottom-center")
+
+        Item {
+            Layout.alignment: Qt.AlignHCenter
+            Layout.preferredWidth: 16
+            Layout.preferredHeight: 16
+
+            Image {
+                id: lockIcon
+
+                source: "../icons/enter.svg"
+                width: 16
+                height: 16
+                sourceSize: Qt.size(16, 16)
+                fillMode: Image.PreserveAspectFit
+                visible: false
+            }
+            MultiEffect {
+                source: lockIcon
+                anchors.fill: lockIcon
+                colorization: 1
+                colorizationColor: "#e0e0ff"
+                visible: true
+                antialiasing: true
+            }
+
+        }
+
+        Text {
+            id: lockMessage
+
+            Layout.alignment: Qt.AlignHCenter
+            font.pixelSize: 12
+            font.family: "RedHatDisplay"
+            font.weight: 400
+            color: "#e0e0ff"
+            text: "Press any key"
+        }
+
+        anchors {
+            // FIX: Height calculation fixes - protect against zero division
+            topMargin: 0 || (lockScreen.height > 0 ? lockScreen.height / 10 : 50)
+            rightMargin: 0 || (lockScreen.height > 0 ? lockScreen.height / 10 : 50)
+            bottomMargin: 0 || (lockScreen.height > 0 ? lockScreen.height / 10 : 50)
+            leftMargin: 0 || (lockScreen.height > 0 ? lockScreen.height / 10 : 50)
+        }
+
+    }
+
     MouseArea {
         id: lockScreenMouseArea
+
         hoverEnabled: true
         z: -1
         anchors.fill: lockScreen
         onClicked: lockScreen.loginRequested()
     }
 
-    Keys.onPressed: function (event) {
-        if (event.key === Qt.Key_CapsLock) {
-            root.capsLockOn = !root.capsLockOn;
-        }
-
-        if (event.key === Qt.Key_Escape) {
-            event.accepted = false;
-            return;
-        } else {
-            lockScreen.loginRequested();
-        }
-        event.accepted = true;
-    }
 }

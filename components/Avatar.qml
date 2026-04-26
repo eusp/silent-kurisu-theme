@@ -4,13 +4,13 @@ import QtQuick.Controls
 
 Rectangle {
     id: avatar
-    property string shape: Config.avatarShape
+    property string shape: "circle"
     property string source: ""
     property bool active: false
-    property int squareRadius: (shape == "circle") ? this.width : (Config.avatarBorderRadius === 0 ? 1 : Config.avatarBorderRadius * Config.generalScale) // min: 1
-    property bool drawStroke: (active && Config.avatarActiveBorderSize > 0) || (!active && Config.avatarInactiveBorderSize > 0)
-    property color strokeColor: active ? Config.avatarActiveBorderColor : Config.avatarInactiveBorderColor
-    property int strokeSize: active ? (Config.avatarActiveBorderSize * Config.generalScale) : (Config.avatarInactiveBorderSize * Config.generalScale)
+    property int squareRadius: (shape == "circle") ? this.width : (16 === 0 ? 1 : 16) // min: 1
+    property bool drawStroke: (active && 2 > 0) || (!active && 0 > 0)
+    property color strokeColor: active ? "#5d5dff" : "#050505"
+    property int strokeSize: active ? 2 : 0
     property string tooltipText: ""
     property bool showTooltip: false
 
@@ -25,8 +25,8 @@ Rectangle {
     Rectangle {
         anchors.fill: parent
         radius: avatar.squareRadius
-        color: Config.passwordInputBackgroundColor
-        opacity: Config.passwordInputBackgroundOpacity
+        color: "#0a0a0f"
+        opacity: 1.0
         visible: true
     }
 
@@ -45,7 +45,7 @@ Rectangle {
 
         onStatusChanged: {
             if (status === Image.Error) {
-                source = Config.getIcon("user-default");
+                source = "../icons/user-default.svg";
                 faceEffects.colorization = 1;
             }
         }
@@ -71,7 +71,7 @@ Rectangle {
         maskThresholdMax: 1.0
         maskThresholdMin: 0.5
         colorization: 0
-        colorizationColor: avatar.strokeColor === Config.passwordInputBackgroundColor && (1.0 - Config.passwordInputBackgroundOpacity < 0.3) ? Config.passwordInputContentColor : avatar.strokeColor
+        colorizationColor: avatar.strokeColor === "#0a0a0f" && (1.0 - 1.0 < 0.3) ? "#e0e0ff" : avatar.strokeColor
     }
 
     Item {
@@ -140,7 +140,7 @@ Rectangle {
         ToolTip {
             id: toolTipControl
             parent: mouseArea
-            enabled: Config.tooltipsEnable && !Config.tooltipsDisableUser
+            enabled: true && !false
             property bool shouldShow: enabled && avatar.showTooltip || (enabled && mouseArea.isCursorInsideAvatar() && avatar.tooltipText !== "")
             visible: shouldShow
             delay: 300
@@ -149,18 +149,18 @@ Rectangle {
             
             contentItem: Text {
                 id: tooltipTextElement
-                font.family: Config.tooltipsFontFamily
-                font.pixelSize: Config.tooltipsFontSize * Config.generalScale
+                font.family: "RedHatDisplay"
+                font.pixelSize: 10
                 text: avatar.tooltipText
-                color: Config.tooltipsContentColor
+                color: "#e0e0ff"
             }
             background: Rectangle {
                 implicitWidth: tooltipTextElement.implicitWidth + (toolTipControl.leftPadding + toolTipControl.rightPadding)
                 implicitHeight: tooltipTextElement.implicitHeight + (toolTipControl.topPadding + toolTipControl.bottomPadding)
-                color: Config.tooltipsBackgroundColor
-                opacity: Config.tooltipsBackgroundOpacity
+                color: "#050505"
+                opacity: 0.95
                 border.width: 0
-                radius: Config.tooltipsBorderRadius * Config.generalScale
+                radius: 6
             }
         }
     }
