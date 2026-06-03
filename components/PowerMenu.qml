@@ -23,11 +23,11 @@ ColumnLayout {
         width: Layout.preferredWidth
         enabled: sddm.canSuspend
         icon: "../icons/power-suspend.svg"
-        contentColor: "#e0e0ff"
-        activeContentColor: "#050505"
+        contentColor: colors.text
+        activeContentColor: colors.crust
         fontFamily: "RedHatDisplay"
         backgroundColor: "transparent"
-        activeBackgroundColor: "#5d5dff"
+        activeBackgroundColor: colors.primary
         activeBackgroundOpacity: 1.0
         iconSize: 16
         fontSize: 12
@@ -52,11 +52,11 @@ ColumnLayout {
         width: Layout.preferredWidth
         enabled: sddm.canReboot
         icon: "../icons/power-reboot.svg"
-        contentColor: "#e0e0ff"
-        activeContentColor: "#050505"
+        contentColor: colors.text
+        activeContentColor: colors.crust
         fontFamily: "RedHatDisplay"
         backgroundColor: "transparent"
-        activeBackgroundColor: "#5d5dff"
+        activeBackgroundColor: colors.primary
         activeBackgroundOpacity: 1.0
         iconSize: 16
         fontSize: 12
@@ -81,11 +81,11 @@ ColumnLayout {
         width: Layout.preferredWidth
         enabled: sddm.canPowerOff
         icon: "../icons/power.svg"
-        contentColor: "#e0e0ff"
-        activeContentColor: "#050505"
+        contentColor: colors.text
+        activeContentColor: colors.crust
         fontFamily: "RedHatDisplay"
         backgroundColor: "transparent"
-        activeBackgroundColor: "#5d5dff"
+        activeBackgroundColor: colors.primary
         activeBackgroundOpacity: 1.0
         iconSize: 16
         fontSize: 12

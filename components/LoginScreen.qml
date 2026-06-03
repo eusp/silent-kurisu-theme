@@ -129,7 +129,7 @@ Item {
                 text: "SDDM could not find any user. Type your username below:"
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
-                color: "#ff1a4d"
+                color: colors.danger
                 font.pixelSize: 12
                 font.family: "RedHatDisplay"
             }
@@ -205,14 +205,14 @@ Item {
 		anchors.bottomMargin: -20
 		anchors.topMargin: -15
 	        
-	        color: "#0a0a0f"
+	        color: colors.surface0
 	        opacity: 0.75
 	        radius: 16
 
 	        layer.enabled: true
 		layer.effect: MultiEffect {
 		    shadowEnabled: true
-		    shadowColor: "#5d5dff"
+		    shadowColor: colors.primary
 		    shadowBlur: 0.6
 		    shadowHorizontalOffset: 0
 		    shadowVerticalOffset: 0
@@ -230,7 +230,7 @@ Item {
                 font.family: "RedHatDisplay"
                 font.weight: 700
                 font.pixelSize: 15
-                color: "#e0e0ff"
+                color: colors.text
                 text: loginScreen.userRealName || loginScreen.userName || ""
                 visible: loginScreen.foundUsers
                 bottomPadding: 5
@@ -283,14 +283,14 @@ Item {
                     fontFamily: "RedHatDisplay"
                     fontSize: 12
                     fontWeight: 600
-                    contentColor: "#5d5dff"
-                    activeContentColor: "#050505"
-                    backgroundColor: "#5d5dff"
+                    contentColor: colors.primary
+                    activeContentColor: colors.crust
+                    backgroundColor: colors.primary
                     backgroundOpacity: 0.0
-                    activeBackgroundColor: "#5d5dff"
+                    activeBackgroundColor: colors.primary
                     activeBackgroundOpacity: 1.0
                     borderSize: 1
-                    borderColor: "#5d5dff"
+                    borderColor: colors.primary
                     borderRadiusLeft: password.visible ? 0 : 10
                     borderRadiusRight: 10
                     onClicked: {
@@ -324,7 +324,7 @@ Item {
                 font.pixelSize: 11
                 font.family: "RedHatDisplay"
                 font.weight: 400
-                color: "#a0a0ff"
+                color: colors.subtext0
                 visible: text !== "" && loginScreen.state !== "authenticating" && (capslockWarning ? loginScreen.userNeedsPassword : true)
                 opacity: visible ? 1.0 : 0.0
                 anchors.top: loginArea.bottom
@@ -347,7 +347,7 @@ Item {
                 function warn(message, type) {
                     clear();
                     text = message;
-                    color = type === "error" ? "#ff1a4d" : (type === "warning" ? "#ffe066" : "#a0a0ff");
+                    color = type === "error" ? colors.danger : (type === "warning" ? colors.warning : colors.subtext0);
                     if (message === (textConstants.capslockWarning || "Caps Lock is on"))
                         capslockWarning = true;
                 }

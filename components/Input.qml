@@ -22,7 +22,7 @@ Item {
     TextField {
         id: textField
         anchors.fill: parent
-        color: "#e0e0ff"
+        color: colors.text
         enabled: input.enabled
         echoMode: input.isPassword ? TextInput.Password : TextInput.Normal
         passwordCharacter: "●"
@@ -33,7 +33,7 @@ Item {
         font.pixelSize: 12
         background: Rectangle {
             anchors.fill: parent
-            color: "#0a0a0f"
+            color: colors.base
             opacity: 1.0
             topLeftRadius: 10
             bottomLeftRadius: 10
@@ -47,7 +47,7 @@ Item {
         Rectangle {
             anchors.fill: parent
             border.width: 1
-            border.color: "#5d5dff"
+            border.color: colors.primary
             color: "transparent"
             topLeftRadius: 10
             bottomLeftRadius: 10

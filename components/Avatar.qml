@@ -9,7 +9,7 @@ Rectangle {
     property bool active: false
     property int squareRadius: (shape == "circle") ? this.width : (16 === 0 ? 1 : 16) // min: 1
     property bool drawStroke: (active && 2 > 0) || (!active && 0 > 0)
-    property color strokeColor: active ? "#5d5dff" : "#050505"
+    property color strokeColor: active ? colors.primary : colors.crust
     property int strokeSize: active ? 2 : 0
     property string tooltipText: ""
     property bool showTooltip: false
@@ -25,7 +25,7 @@ Rectangle {
     Rectangle {
         anchors.fill: parent
         radius: avatar.squareRadius
-        color: "#0a0a0f"
+        color: colors.base
         opacity: 1.0
         visible: true
     }
@@ -71,7 +71,7 @@ Rectangle {
         maskThresholdMax: 1.0
         maskThresholdMin: 0.5
         colorization: 0
-        colorizationColor: avatar.strokeColor === "#0a0a0f" && (1.0 - 1.0 < 0.3) ? "#e0e0ff" : avatar.strokeColor
+        colorizationColor: avatar.strokeColor === colors.base && (1.0 - 1.0 < 0.3) ? colors.text : avatar.strokeColor
     }
 
     Item {
@@ -152,12 +152,12 @@ Rectangle {
                 font.family: "RedHatDisplay"
                 font.pixelSize: 10
                 text: avatar.tooltipText
-                color: "#e0e0ff"
+                color: colors.text
             }
             background: Rectangle {
                 implicitWidth: tooltipTextElement.implicitWidth + (toolTipControl.leftPadding + toolTipControl.rightPadding)
                 implicitHeight: tooltipTextElement.implicitHeight + (toolTipControl.topPadding + toolTipControl.bottomPadding)
-                color: "#050505"
+                color: colors.crust
                 opacity: 0.95
                 border.width: 0
                 radius: 6

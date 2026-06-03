@@ -94,13 +94,13 @@ Item {
                 font.pixelSize: 120
                 font.weight: 900
                 font.family: "RedHatDisplay"
-                color: "#050505"
+                color: colors.crust
                 Layout.alignment: Qt.AlignHCenter
                 layer.enabled: true
 
                 layer.effect: MultiEffect {
                     shadowEnabled: true
-                    shadowColor: "#5d5dff"
+                    shadowColor: colors.primary
                     shadowBlur: 0.8
                     shadowHorizontalOffset: 0
                     shadowVerticalOffset: 0
@@ -112,7 +112,7 @@ Item {
                 Layout.alignment: Qt.AlignHCenter
                 width: 40
                 height: 1
-                color: "#a0a0ff"
+                color: colors.subtext0
                 opacity: 0.4
             }
 
@@ -128,12 +128,12 @@ Item {
                 font.pixelSize: 25
                 font.family: "RedHatDisplay"
                 font.weight: 800
-                color: "#a0a0ff"
+                color: colors.subtext0
                 layer.enabled: true
 
                 layer.effect: MultiEffect {
                     shadowEnabled: true
-                    shadowColor: "#5d5dff"
+                    shadowColor: colors.primary
                     shadowBlur: 0.8
                     shadowHorizontalOffset: 0
                     shadowVerticalOffset: 0
@@ -183,7 +183,7 @@ Item {
                 source: lockIcon
                 anchors.fill: lockIcon
                 colorization: 1
-                colorizationColor: "#e0e0ff"
+                colorizationColor: colors.text
                 visible: true
                 antialiasing: true
             }
@@ -197,7 +197,7 @@ Item {
             font.pixelSize: 12
             font.family: "RedHatDisplay"
             font.weight: 400
-            color: "#e0e0ff"
+            color: colors.text
             text: "Press any key"
         }
 

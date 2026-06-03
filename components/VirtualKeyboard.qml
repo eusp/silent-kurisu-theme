@@ -17,9 +17,9 @@ Item {
         height: inputPanel.height + 2 // Let the keyboard define its own natural height
         anchors.horizontalCenter: parent.horizontalCenter
         
-        color: "#0a0a0f"
+        color: colors.base
         opacity: root.virtualKeyboardVisible ? 0.95 : 0.0
-        border.color: "#5d5dff"
+        border.color: colors.primary
         border.width: 1
         radius: 0
         clip: true
@@ -28,7 +28,7 @@ Item {
         layer.enabled: true
         layer.effect: MultiEffect {
             shadowEnabled: true
-            shadowColor: "#5d5dff"
+            shadowColor: colors.primary
             shadowBlur: 0.8
             shadowHorizontalOffset: 0
             shadowVerticalOffset: 0
@@ -46,7 +46,7 @@ Item {
             layer.enabled: true
             layer.effect: MultiEffect {
                 colorization: 0.6
-                colorizationColor: "#2b2bff"
+                colorizationColor: colors.primaryMuted
             }
         }
 

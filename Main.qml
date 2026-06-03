@@ -8,6 +8,10 @@ import "components"
 Item {
     id: root
 
+    Colors {
+        id: colors
+    }
+
     property bool virtualKeyboardVisible: false
     property bool capsLockOn: false
     Component.onCompleted: {
@@ -105,7 +109,7 @@ Item {
         Image {
             // Background
             id: backgroundImage
-            property string tsource: root.state === "lockState" ? "kurisu.mp4" : "rei.mp4"
+            property string tsource: root.state === "background.mp4"
 
             property bool isVideo: {
                 if (!tsource || tsource.toString().length === 0)
@@ -117,7 +121,7 @@ Item {
                 return ["avi", "mp4", "mov", "mkv", "m4v", "webm"].indexOf(ext) !== -1;
             }
             property bool displayColor: root.state === "lockState" && false || root.state === "loginState" && false
-            property string placeholder: "kurisu.png" // Idea stolen from astronaut-theme. Not a fan of it, but works...
+            property string placeholder: "background.png" // Idea stolen from astronaut-theme. Not a fan of it, but works...
 
             anchors.fill: parent
             source: !isVideo ? "backgrounds/" + tsource : ""
@@ -155,7 +159,7 @@ Item {
                 id: backgroundColor
                 anchors.fill: parent
                 anchors.margins: 0
-                color: root.state === "lockState" && false ? "#050505" : (root.state === "loginState" && false ? "#050505" : "black")
+                color: root.state === "lockState" && false ? colors.crust : (root.state === "loginState" && false ? colors.crust : "black")
                 visible: parent.displayColor || (backgroundVideo.visible && parent.placeholder.length === 0)
             }
 

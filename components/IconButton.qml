@@ -47,7 +47,7 @@ Item {
         layer.enabled: true
         layer.effect: MultiEffect {
             shadowEnabled: true
-            shadowColor: "#5d5dff"
+            shadowColor: colors.primary
             shadowBlur: 0.6
             shadowHorizontalOffset: 0
             shadowVerticalOffset: 0
@@ -169,13 +169,13 @@ Item {
                 font.family: "RedHatDisplay"
                 font.pixelSize: 10
                 text: iconButton.tooltipText
-                color: "#e0e0ff"
+                color: colors.text
             }
 
             background: Rectangle {
                 implicitWidth: tooltipTextElement.implicitWidth + (toolTipControl.leftPadding + toolTipControl.rightPadding)
                 implicitHeight: tooltipTextElement.implicitHeight + (toolTipControl.topPadding + toolTipControl.bottomPadding)
-                color: "#050505"
+                color: colors.crust
                 opacity: 0.95
                 border.width: 0
                 radius: 6

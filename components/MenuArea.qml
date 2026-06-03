@@ -18,13 +18,13 @@ Item {
             fontSize: 12
             enabled: loginScreen.state === "normal" || popup.visible
             active: popup.visible
-            contentColor: "#e0e0ff"
-            activeContentColor: "#050505"
+            contentColor: colors.text
+            activeContentColor: colors.crust
             borderRadius: 8
             borderSize: 0
-            backgroundColor: "#5d5dff"
+            backgroundColor: colors.primary
             backgroundOpacity: 0.0
-            activeBackgroundColor: "#5d5dff"
+            activeBackgroundColor: colors.primary
             activeBackgroundOpacity: 1.0
             fontFamily: "RedHatDisplay"
             activeFocusOnTab: true
@@ -43,7 +43,7 @@ Item {
                 parent: sessionButton
                 padding: 10
                 background: Rectangle {
-                    color: "#050505"
+                    color: colors.crust
                     opacity: 0.95
                     radius: 8
 
@@ -53,7 +53,7 @@ Item {
                         radius: parent.radius
                         color: "transparent"
                         border {
-                            color: "#5d5dff"
+                            color: colors.primary
                             width: 1
                         }
                     }
@@ -109,15 +109,15 @@ Item {
             width: 32
             icon: "../icons/power.svg"
             iconSize: 16
-            contentColor: "#e0e0ff"
-            activeContentColor: "#050505"
+            contentColor: colors.text
+            activeContentColor: colors.crust
             fontFamily: "RedHatDisplay"
             active: popup.visible
             borderRadius: 8
             borderSize: 0
-            backgroundColor: "#5d5dff"
+            backgroundColor: colors.primary
             backgroundOpacity: 0.0
-            activeBackgroundColor: "#5d5dff"
+            activeBackgroundColor: colors.primary
             activeBackgroundOpacity: 1.0
             showKeyboardPattern: true
             enabled: loginScreen.state === "normal" || popup.visible
@@ -132,7 +132,7 @@ Item {
                 id: popup
                 parent: powerButton
                 background: Rectangle {
-                    color: "#050505"
+                    color: colors.crust
                     opacity: 0.95
                     radius: 8
 
@@ -142,7 +142,7 @@ Item {
                         radius: parent.radius
                         color: "transparent"
                         border {
-                            color: "#5d5dff"
+                            color: colors.primary
                             width: 1
                         }
                     }
@@ -220,15 +220,15 @@ Item {
             width: 32
             icon: "../icons/keyboard.svg" // fallback to an existing icon if keyboard doesn't exist, wait, do we have keyboard.svg? Let's check or use user-default.svg temporarily
             iconSize: 16
-            contentColor: root.virtualKeyboardVisible ? "#050505" : "#e0e0ff"
-            activeContentColor: "#050505"
+            contentColor: root.virtualKeyboardVisible ? colors.crust : colors.text
+            activeContentColor: colors.crust
             fontFamily: "RedHatDisplay"
             active: root.virtualKeyboardVisible
             borderRadius: 8
             borderSize: 0
-            backgroundColor: "#5d5dff"
+            backgroundColor: colors.primary
             backgroundOpacity: root.virtualKeyboardVisible ? 1.0 : 0.0
-            activeBackgroundColor: "#5d5dff"
+            activeBackgroundColor: colors.primary
             activeBackgroundOpacity: 1.0
             showKeyboardPattern: true
             enabled: loginScreen.state === "normal"
@@ -285,9 +285,9 @@ Item {
         }
     }
 
-   Rectangle {
+    Rectangle {
         id: bottomLeftPanel
-        color: "#0a0a0f"
+        color: colors.surface0
         opacity: 0.92
         radius: 12
         anchors {
@@ -298,11 +298,11 @@ Item {
         }
         width: bottomLeftButtons.width + 20
         height: bottomLeftButtons.height + 20
-
+ 
         layer.enabled: true
         layer.effect: MultiEffect {
             shadowEnabled: true
-            shadowColor: "#5d5dff"
+            shadowColor: colors.primary
             shadowBlur: 0.6
             shadowHorizontalOffset: 0
             shadowVerticalOffset: 0

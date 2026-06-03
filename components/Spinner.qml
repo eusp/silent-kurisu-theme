@@ -62,7 +62,7 @@ Item {
         source: spinner
         anchors.fill: spinner
         colorization: 1
-        colorizationColor: "#5d5dff"
+        colorizationColor: colors.primary
         opacity: 0.0
         antialiasing: true
     }
@@ -79,7 +79,7 @@ Item {
         id: spinnerText
         visible: true
         text: "Loading"
-        color: "#5d5dff"
+        color: colors.primary
         font.pixelSize: 12
         font.weight: 400
         font.family: "RedHatDisplay"
