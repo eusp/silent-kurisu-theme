@@ -109,7 +109,7 @@ Item {
         Image {
             // Background
             id: backgroundImage
-            property string tsource: root.state === "background.mp4"
+            property string tsource: "background.mp4"
 
             property bool isVideo: {
                 if (!tsource || tsource.toString().length === 0)
